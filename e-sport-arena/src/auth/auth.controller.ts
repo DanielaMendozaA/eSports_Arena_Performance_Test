@@ -1,16 +1,16 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Inject, BadRequestException } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { IAuthService, LoginResponse } from './interfaces/auth-service.interface';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { User } from 'src/users/entities/user.entity';
 import { ApiDocLoginUser, ApiDocRegisterUser } from './decorators/auth-swagger.decorator';
 import { RegisterResponseDto } from './dto/register-response.dto';
 import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { LoginResponseDto } from './dto/login-response.dto';
+import { CreatePlayerDto } from './dto/create-player.dto'
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @ApiTags("Auth")
-@ApiExtraModels(RegisterResponseDto, LoginResponseDto)
+@ApiExtraModels(RegisterResponseDto, LoginResponseDto, CreatePlayerDto, CreateUserDto)
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -20,8 +20,8 @@ export class AuthController {
 
   @ApiDocRegisterUser(RegisterResponseDto)
   @Post('register')
-  create(@Body() createUserDto : CreateUserDto) : Promise<Partial<User>>{
-    return this.authService.register(createUserDto)
+  create(@Body() CreatePlayerDto: CreatePlayerDto) : Promise<Partial<User>>{
+    return this.authService.registerPlayer(CreatePlayerDto)
   }
 
   @ApiDocLoginUser(LoginResponseDto)

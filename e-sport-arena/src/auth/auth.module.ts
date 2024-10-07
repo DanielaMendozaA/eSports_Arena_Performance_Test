@@ -8,6 +8,7 @@ import { JwtGuard } from './guards/jwt.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { PlayersModule } from 'src/players/players.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { PassportModule } from '@nestjs/passport';
     }),
     UsersModule,
     PassportModule,
-    ConfigModule
+    ConfigModule,
+    PlayersModule
   ],
   controllers: [AuthController],
   providers: [
