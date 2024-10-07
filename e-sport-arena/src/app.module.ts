@@ -6,6 +6,8 @@ import { JoiValidation } from './common/config/joi-validation.config';
 
 import { CommonModule } from './common/common.module';
 import { DatabaseConfigService } from './common/config/db-config';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -20,7 +22,10 @@ import { DatabaseConfigService } from './common/config/db-config';
       useClass: DatabaseConfigService
 
     }),
-    CommonModule],
+    CommonModule,
+    UsersModule,
+    AuthModule
+  ],
   providers: [],
 })
 export class AppModule {}
