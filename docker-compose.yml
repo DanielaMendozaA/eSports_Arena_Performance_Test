@@ -1,0 +1,42 @@
+services:
+  db-e-sports-arena:
+    image: postgres:14.3
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_USER_PASSWORD}
+      POSTGRES_DB: ${DB_USER_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - ./postgres-db-e-sports-arena:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    networks:
+      - e-sports-arena-network
+
+  e-sports-arena-service:
+    build:
+      context: ./e-sport-arena
+    container_name: e-sports-arena
+    ports:
+      - "3004:3004"
+    environment:
+      DB_HOST: db-e-sports-arena
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_USER_PASSWORD}
+      DB_NAME: ${DB_USER_NAME}
+    depends_on:
+      - db-e-sports-arena
+    env_file:
+      - ./.env
+    volumes:
+      - ./e-sport-arena:/app
+      - /app/node_modules
+    networks:
+      - e-sports-arena-network
+
+networks:
+ e-sports-arena-network:
+    driver: bridge
