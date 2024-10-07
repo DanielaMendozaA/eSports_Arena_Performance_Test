@@ -1,5 +1,5 @@
 
-import {  Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
@@ -11,6 +11,12 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { User } from 'src/users/entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
+import { CreatePlayerDto } from './dto/create-player.dto'
+import { Rank } from 'src/players/enums/rank.enum';
+import { PlayersService } from 'src/players/players.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Player } from 'src/players/entities/player.entity';
+import { Repository } from 'typeorm';
 
 
 
@@ -19,8 +25,11 @@ export class AuthService implements IAuthService {
   constructor(
     @Inject('IUserService')
     private readonly userService: IUserService,
+    @InjectRepository(Player)
+    private readonly playerRepository : Repository<Player>,
     private readonly jwtService: JwtService,
-  ) {};
+    private readonly playerService: PlayersService,
+  ) { };
 
   async login(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
@@ -54,8 +63,34 @@ export class AuthService implements IAuthService {
       email: createdUser.email
     }
     console.log(userResponse);
-    
+
     return userResponse
+  }
+
+  async registerPlayer(CreatePlayerDto: CreatePlayerDto) {
+    const { userName, email, password, gamerTag, rank = Rank.BRONZE } = CreatePlayerDto;
+    const newUser = {
+      userName,
+      email,
+      password
+    };
+    const registeredUser = await this.register(newUser);
+    console.log(registeredUser.id);
+    
+
+    const newPlayer = {
+      gamerTag,
+      rank,
+      user: {id : registeredUser.id}
+    }
+
+    const createPlayer =  this.playerRepository.create(newPlayer)
+
+    return await this.playerRepository.save(createPlayer)
+
+    
+
+
   }
 
   private hashingPassword(password: string) {
@@ -70,7 +105,7 @@ export class AuthService implements IAuthService {
   private async validateUser(userEmail: string, userPassword: string): Promise<Partial<User>> {
     const user = await this.userService.findByEmailWithPassword(userEmail);
     if (!user) {
-      throw new UnauthorizedException("Invalid credentials"); 
+      throw new UnauthorizedException("Invalid credentials");
     }
     const { password, email, id, role }: Partial<User> = user
 

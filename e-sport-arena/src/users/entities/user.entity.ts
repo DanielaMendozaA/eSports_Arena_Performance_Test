@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { AuditableEntity } from "src/common/entities/auditable.entity";
 import { UserRoleEnum } from "src/common/enums/roles.enum";
+import { Player } from "src/players/entities/player.entity";
 
 @Entity()
 export class User extends AuditableEntity {
@@ -19,8 +20,11 @@ export class User extends AuditableEntity {
 
     @Column({
         type: "enum",
-        enum: ["admin", "regular_client"],
-        default: "regular_client"
+        enum: ["admin", "player"],
+        default: "player"
     })
     role: UserRoleEnum
+
+    @OneToMany(() => Player, player => player.user)
+    player: Player[];
 }
