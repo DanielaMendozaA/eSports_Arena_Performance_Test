@@ -15,6 +15,7 @@ import { PlayersSeeder } from './common/seeders/players.seeder';
 import { TournamentsModule } from './tournaments/tournaments.module';
 import { CompetitionsModule } from './competitions/competitions.module';
 import { ResultsModule } from './results/results.module';
+import { TournamentsSeeder } from './common/seeders/tournaments.seeder';
 
 @Module({
   imports: [
@@ -39,7 +40,8 @@ import { ResultsModule } from './results/results.module';
   providers: [
     PlayersSeeder,
     UsersSeeder,
-    SeederRunner
+    SeederRunner,
+    TournamentsSeeder
   ],
 })
 export class AppModule  implements OnModuleInit{
