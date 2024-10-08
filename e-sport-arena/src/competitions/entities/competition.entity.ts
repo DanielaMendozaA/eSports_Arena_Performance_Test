@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { AuditableEntity } from "src/common/entities/auditable.entity";
 import { Tournament } from "src/tournaments/entities/tournament.entity";
 import { Player } from "src/players/entities/player.entity";
@@ -14,7 +14,8 @@ export class Competition extends AuditableEntity {
     matchDate: Date;
 
     @ManyToOne(() => Tournament, tournament => tournament.competition)
-    tournament: Tournament
+    @JoinColumn({ name: 'tournamentId' }) 
+    tournament: Tournament;
 
     @ManyToMany(() => Player, (player) => player.competitions)
     players: Player[];
