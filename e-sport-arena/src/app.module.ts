@@ -12,7 +12,10 @@ import { PlayersModule } from './players/players.module';
 import { SeederRunner } from './common/seeders/seeder-runner.seeder';
 import { UsersSeeder } from './common/seeders/users.seeder';
 import { PlayersSeeder } from './common/seeders/players.seeder';
-
+import { TournamentsModule } from './tournaments/tournaments.module';
+import { CompetitionsModule } from './competitions/competitions.module';
+import { ResultsModule } from './results/results.module';
+import { TournamentsSeeder } from './common/seeders/tournaments.seeder';
 
 @Module({
   imports: [
@@ -29,12 +32,16 @@ import { PlayersSeeder } from './common/seeders/players.seeder';
     CommonModule,
     UsersModule,
     AuthModule,
-    PlayersModule
+    PlayersModule,
+    TournamentsModule,
+    CompetitionsModule,
+    ResultsModule
   ],
   providers: [
     PlayersSeeder,
     UsersSeeder,
-    SeederRunner
+    SeederRunner,
+    TournamentsSeeder
   ],
 })
 export class AppModule  implements OnModuleInit{

@@ -2,6 +2,7 @@ import { applyDecorators, Type } from "@nestjs/common"
 import { ApiOperation, ApiBearerAuth, ApiParam } from "@nestjs/swagger"
 import { ApiForbidden, ApiNotFound, ApiSuccessResponses, ApiSuccessResponsesArray, ApiUnauthorized } from "src/common/decorators/swagger.decorator"
 
+
 export function ApiDocGetAllUsers <T> (entity: Type<T>){
     return applyDecorators(
         ApiOperation({

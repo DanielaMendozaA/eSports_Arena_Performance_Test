@@ -13,7 +13,6 @@ import { User } from 'src/users/entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { CreatePlayerDto } from './dto/create-player.dto'
 import { Rank } from 'src/players/enums/rank.enum';
-import { PlayersService } from 'src/players/players.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Player } from 'src/players/entities/player.entity';
 import { Repository } from 'typeorm';
@@ -28,7 +27,6 @@ export class AuthService implements IAuthService {
     @InjectRepository(Player)
     private readonly playerRepository : Repository<Player>,
     private readonly jwtService: JwtService,
-    private readonly playerService: PlayersService,
   ) { };
 
   async login(loginUserDto: LoginUserDto) {
