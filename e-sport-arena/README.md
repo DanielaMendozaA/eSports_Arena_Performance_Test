@@ -2,12 +2,12 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-# Endpoints disponibles
-
-A continuación se listan los endpoints disponibles en la API.
+# X-API-KEY enviroment variable
+- API-KEY=AIzaSyA-KfNyPWFmEenAfgZiNS01ETS8TXLUwcU
+# Available Endpoints 
 
 ###  (Users)
-- **GET** `/api/v1/users/:term` - Obtener un usuario por ID o nombre
+- **GET** `/api/v1/users/:term` 
 ---
 
 ###  (Auth)

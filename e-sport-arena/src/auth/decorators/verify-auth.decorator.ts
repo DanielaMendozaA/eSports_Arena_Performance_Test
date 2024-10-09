@@ -4,16 +4,15 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { UserRoleEnum } from "src/common/enums/roles.enum";
 import { JwtGuard } from "../guards/jwt.guard";
 import { RolesGuard } from "../guards/roles.guard";
+import { ApiKeyGuard } from "../guards/api-key.guard";
 
 export const ROLES_KEY = 'roles';
 
 export function VerifyAuthService(roles: UserRoleEnum[]){
     return applyDecorators(
         SetMetadata(ROLES_KEY, roles),
-        UseGuards(JwtGuard, RolesGuard),
+        UseGuards(ApiKeyGuard ,JwtGuard, RolesGuard),
         ApiBearerAuth('access-token')
     );
 }
 
-
-// export const Roles = (...roles: UserRoleEnum[]) => SetMetadata(ROLES_KEY, roles);

@@ -9,4 +9,5 @@ export const JoiValidation = Joi.object({
     DB_NAME: Joi.string().required(),
     EXECUTE_SEEDS: Joi.boolean().required(),
     JWT_SECRET: Joi.string().required(),
+    API_KEY: Joi.string().required()
 });
